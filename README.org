@@ -9,11 +9,12 @@ Automatisation for subtree clonning function in org-mode. Calls
 
 #+begin_src elisp
 (use-package org-clone-property
-  :config
-  (org-clone-property-load))
+  :config (org-clone-property-load))
 #+end_src
 
-Recipe for doom emacs package.el:
+** Doom emacs
+
+Package recipe:
 #+begin_src elisp
 (package! org-clone-property
   :recipe (:repo "mskorzhinskiy/org-clone-property"
