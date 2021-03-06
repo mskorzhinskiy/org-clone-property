@@ -1,0 +1,56 @@
+#+TITLE: Property to auto-clone tree for org-mode
+
+Automatisation for subtree clonning function in org-mode. Calls
+  ~org-clone-subtree-with-time-shift~ on headlines with CLONE_TIMES and
+  CLONE_SHIFT properties set. See [[https://karl-voit.at/2017/01/15/org-clone-subtree-with-time-shift/][UOMF: Recurring Events with Org Mode]] for more
+  insight.
+
+* Installation
+
+#+begin_src elisp
+(use-package org-clone-property
+  :config
+  (org-clone-property-load))
+#+end_src
+
+Recipe for doom emacs package.el:
+#+begin_src elisp
+(package! org-clone-property
+  :recipe (:repo "mskorzhinskiy/org-clone-property"
+           :host github :branch "main"))
+#+end_src
+
+* Usage
+
+Let's say we have the following file:
+#+begin_example
+,* TODO Entry
+SCHEDULED: <2021-01-09 Sat>
+:PROPERTIES:
+:CLONE_TIMES: 2
+:CLONE_SHIFT: +1w
+:END:
+#+end_example
+
+If we set this headline as "DONE" then we will automatically get this entry clonned 2 times with time shift of 1 week, producing the following file:
+
+#+begin_example
+,* DONE Entry
+CLOSED: [2021-01-09 Sat 16:52] SCHEDULED: <2021-01-09 Sat>
+,* TODO Entry
+SCHEDULED: <2021-01-16 Sat>
+,* TODO Entry
+SCHEDULED: <2021-01-23 Sat>
+:PROPERTIES:
+:CLONE_TIMES: 2
+:CLONE_SHIFT: +1w
+:END:
+#+end_example
+
+* Configuration
+
+1. ~org-clone-trigger-keywords~: which =TODO= keywrods triggering clonning. You may consider that canceling something shouldn't clone your entries further.
+
+2. ~org-clone-trigger-times-property~: name of the property which controls how many new entries should we produce. See ~org-clone-subtree-with-time-shift~ for details.
+
+3. ~org-clone-trigger-shift-property~: name of the property which controls the time shift of entry. See ~org-clone-subtree-with-time-shift~ for details.
